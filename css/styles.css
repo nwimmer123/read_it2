@@ -1,0 +1,26 @@
+body {
+  padding-top: 80px;
+}
+
+.top {
+  font-family: 'UnifrakturMaguntia', cursive;
+  color: #CED807;
+  text-shadow: 2px 2px #ff0000;
+}
+
+#thanos {
+  float: left;
+  height: 150px;
+  margin: 15px;
+  border-radius: 30px;
+  opacity: 0.8;
+}
+
+.navbutton {
+  padding: 5px;
+  margin: 5px;
+}
+
+.navbar {
+  opacity: .8;
+}

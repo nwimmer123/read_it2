@@ -14,6 +14,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
+var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var User   = require('./app/models/user'); // get our mongoose model
 var configDB = require('./config/database.js');
 
 // configuration ===============================================================
@@ -24,9 +26,13 @@ require('./config/passport')(passport); // pass passport for configuration
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
+
 app.use(bodyParser()); // get information from html forms
 
 app.set('view engine', 'ejs'); // set up ejs for templating
+
+app.use('/',express.static(__dirname + '/public'));
+app.use('/',express.static(__dirname + '/'));
 
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
@@ -36,6 +42,12 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  next();
+});
 
 // launch ======================================================================
 app.listen(port);
